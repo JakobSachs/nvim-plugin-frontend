@@ -10,7 +10,7 @@ app.config["api_url"] = os.environ.get("API_URL", "http://0.0.0.0:8080")
 def index():
     # get 3 popular plugins
     try:
-        req = requests.get(app.config["api_url"] + "/plugins?sort=stars&desc=True",timeout=5).json()
+        req = requests.get(app.config["api_url"] + "/plugins?sort=stars&desc=True",timeout=5)
         pop_plugins = req.json()
         pop_plugins = pop_plugins[:3]
     except requests.exceptions.Timeout:
