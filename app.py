@@ -21,10 +21,10 @@ def index():
     # get 3 latest plugins
     try:
         req= requests.get(app.config["api_url"] + "/plugins?sort=last_updated&desc=True",timeout=5)
-        app.logger.error("Timeout when calling API: %s", app.config["api_url"] + "/plugins?sort=last_updated&desc=True")
         latest_plugins = req.json()
         latest_plugins = latest_plugins[:3]
     except requests.exceptions.Timeout:
+        app.logger.error("Timeout when calling API: %s", app.config["api_url"] + "/plugins?sort=last_updated&desc=True")
         latest_plugins = []
 
 
