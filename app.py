@@ -30,6 +30,16 @@ def index():
 
     return render_template("index.html", pop_plugins=pop_plugins, latest_plugins=latest_plugins)
 
+@app.route("/popular")
+def popular():
+    try:
+        req = requests.get(app.config["api_url"] + "/plugins?sort=stars&desc=True",timeout=5)
+        plugins = req.json()
+    except requests.exceptions.Timeout:
+        app.logger.error("Timeout when calling API: %s", app.config["api_url"] + "/plugins?sort=stars&desc=True")
+        plugins = []
+    return render_template("popular.html", plugins=plugins)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

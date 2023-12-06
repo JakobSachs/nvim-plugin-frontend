@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nvim Plugins</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='css/main.css')}}"
+    />
+  </head>
+
+  <body>
+    <section class="w-full min-h-screen flex flex-col">
+      <header
+        class="w-full flex items-center justify-between px-4 py-2 bg-white dark:bg-background-900 text-gray-600 dark:text-gray-300"
+      >
+        <a class="flex items-center" href="#">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-6 w-6"
+          >
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span class="sr-only">Nvim Plugins</span>
+        </a>
+        <nav class="flex gap-4">
+          <a class="text-sm font-medium hover:underline" href="#"> About </a>
+          <a class="text-sm font-medium hover:underline" href="#"> Contact </a>
+          <a class="text-sm font-medium hover:underline" href="#"> Legal </a>
+        </nav>
+      </header>
+      <main
+        class="flex-1 w-full px-4 py-8 md:px-8 md:py-16 bg-white dark:bg-background-950 text-white dark:text-gray-300"
+      >
+        <section class="container mx-auto p-6">
+          <div class="flex items-center justify-between mb-6">
+            <div
+              class="w-1/2"
+              data-dashlane-rid="0597712ec817a9c8"
+              data-form-type=""
+            >
+              <input
+                class="flex h-10 rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-text-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 bg-white dark:bg-gray-950 w-full"
+                placeholder="Search projects..."
+                data-dashlane-rid="d8fdbfc01de2a44a"
+                data-form-type=""
+              />
+            </div>
+            <div class="w-1/4">
+              <button
+                type="button"
+                role="combobox"
+                aria-controls="radix-:r17:"
+                aria-expanded="false"
+                aria-autocomplete="none"
+                dir="ltr"
+                data-state="closed"
+                data-placeholder=""
+                class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-text-300 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <span style="pointer-events: none">Select Sorting Criteria</span
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-4 w-4 opacity-50"
+                  aria-hidden="true"
+                >
+                  <path d="m6 9 6 6 6-6"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <ul
+            class="max-w-7xl divide-y divide-gray-200 dark:divide-gray-700 flex flex-col items-center justify-items-center"
+          >
+            {% for plug in plugins %}
+            <li class="pb-3 sm:pb-4 w-50 block grow">
+              <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                <div class="">
+                  <img class="w-8 h-8 rounded-full" src="" alt="image" />
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p
+                    class="text-sm font-medium text-gray-900 truncate dark:text-white"
+                  >
+                    {{plug.name}}
+                  </p>
+                  <a
+                    class="text-sm text-gray-500 truncate dark:text-gray-400"
+                    href="https://github.com/{{plug.author}}/{{plug.name}}"
+                  >
+                    github.com/{{plug.author}}/{{plug.name}}
+                  </a>
+                </div>
+                <div
+                  class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white"
+                >
+                Text wowie
+                </div>
+              </div>
+            </li>
+
+            {% endfor %}
+          </ul>
+        </section>
+      </main>
+      <footer
+        class="w-full h-16 flex items-center justify-center px-4 py-2 bg-white dark:bg-background-950"
+      >
+        <nav class="flex gap-4">
+          <a class="text-sm font-medium hover:underline" href="#"> About </a>
+          <a class="text-sm font-medium hover:underline" href="#"> Contact </a>
+          <a class="text-sm font-medium hover:underline" href="#"> Legal </a>
+        </nav>
+      </footer>
+    </section>
+  </body>
+</html>

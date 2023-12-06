@@ -13,7 +13,7 @@
   <body>
     <section class="w-full min-h-screen flex flex-col">
       <header
-        class="w-full flex items-center justify-between px-4 py-2 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300"
+        class="w-full flex items-center justify-between px-4 py-2 bg-white dark:bg-background-900 text-gray-600 dark:text-gray-300"
       >
         <a class="flex items-center" href="#">
           <svg
@@ -40,10 +40,12 @@
         </nav>
       </header>
       <main
-        class="flex-1 w-full px-4 py-8 md:px-8 md:py-16 bg-gray-100 dark:bg-gray-900 text-white dark:text-gray-300"
+        class="flex-1 w-full px-4 py-8 md:px-8 md:py-16 bg-white dark:bg-background-950 text-white dark:text-gray-300"
       >
         <section class="text-center space-y-6">
-          <h1 class="text-2xl md:text-3xl font-bold text-text dark:text-white">
+          <h1
+            class="text-2xl md:text-3xl font-bold text-text-900 dark:text-white"
+          >
             Welcome to Nvim Plugins!
           </h1>
           <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300">
@@ -51,7 +53,7 @@
             workflow.
           </p>
           <button
-            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors bg-primary text-white hover:bg-primary px-4 py-2"
+            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors bg-background-900 text-white hover:bg-primary-300 px-4 py-2"
           >
             Get Started!
           </button>
@@ -61,14 +63,17 @@
             class="flex flex-col justify-center items-center md:w-full lg:w-2/3"
           >
             <section class="mt-12 w-full">
-              <h2 class="text-2xl font-bold mb-4 text-text dark:text-white">
-                Popular Plugins
-              </h2>
-              <div class="grid gap-6 grid-cols-3 h-40">
+              <a
+                class="text-3xl hover:underline transition-all decoration-1 font-bold mb-4 hover:text-primary-300 text-text-900 dark:text-white"
+                href="/popular"
+              >
+                Popular Plugins:
+              </a>
+              <div class="grid gap-6 grid-cols-3 h-40 pt-4">
                 <!-- POPULAR PLUGINS -->
                 {% for plug in pop_plugins %}
                 <div
-                  class="rounded-lg border dark:border-gray-500 bg-white dark:bg-gray-800 p-4 text-text shadow-sm flex flex-col h-full"
+                  class="rounded-lg hover:border-primary-300 border transition-all dark:border-gray-600 bg-white dark:bg-background-950 p-4 text-text-900 shadow-sm flex flex-col h-full"
                 >
                   <a class="text-xl font-semibold dark:text-white" href="#">
                     {{plug.author}} / {{plug.name}}
@@ -79,7 +84,10 @@
                     {{plug.description}}
                   </p>
                   <div class="flex justify-end items-center">
-                    <a class="text-blue-500 hover:underline" href="#">
+                    <a
+                      class="text-primary-500 hover:underline transition-all"
+                      href="#"
+                    >
                       View More
                     </a>
                   </div>
@@ -89,15 +97,18 @@
               </div>
             </section>
             <section class="mt-12 w-full">
-              <h2 class="text-2xl font-bold mb-4 text-text dark:text-white">
-                Newly Updated Plugins
-              </h2>
-              <div class="grid gap-6 grid-cols-3 h-full">
+              <a
+                class="text-3xl hover:underline transition-all decoration-1 font-bold mb-4 hover:text-primary-300 text-text-900 dark:text-white"
+                href="/recent"
+              >
+                Recently Updated Plugins:
+              </a>
+              <div class="grid gap-6 grid-cols-3 h-full pt-4">
                 <!-- RECENT PLUGINS -->
                 {% for plug in latest_plugins %}
 
                 <div
-                  class="rounded-lg border dark:border-gray-500 bg-white dark:bg-gray-800 p-4 text-text shadow-sm flex flex-col h-full"
+                  class="rounded-lg hover:border-primary-300 border transition-all dark:border-gray-600 bg-white dark:bg-background-950 p-4 text-text-900 shadow-sm flex flex-col h-full"
                 >
                   <a class="text-xl font-semibold dark:text-white" href="#">
                     {{plug.author}} / {{plug.name}}
@@ -108,7 +119,10 @@
                     {{plug.description}}
                   </p>
                   <div class="flex justify-end items-center">
-                    <a class="text-blue-500 hover:underline" href="#">
+                    <a
+                      class="text-primary-500 transition-all hover:underline"
+                      href="#"
+                    >
                       View More
                     </a>
                   </div>
@@ -121,7 +135,7 @@
         </div>
       </main>
       <footer
-        class="w-full h-16 flex items-center justify-center px-4 py-2 bg-white dark:bg-gray-800"
+        class="w-full h-16 flex items-center justify-center px-4 py-2 bg-white dark:bg-background-950"
       >
         <nav class="flex gap-4">
           <a class="text-sm font-medium hover:underline" href="#"> About </a>
