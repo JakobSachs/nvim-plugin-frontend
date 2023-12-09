@@ -1,6 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['../templates/*.html'],
+  safelist: [
+    'bg-accent-300',
+    'bg-primary-300',
+    'bg-secondary-300',
+    'bg-purple-300',
+  ],
   theme: {
     extend: {
       colors: {
