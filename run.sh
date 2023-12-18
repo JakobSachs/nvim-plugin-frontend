@@ -1,7 +1,7 @@
 #!/bin/zsh
 #
 # Check if the local API is running
-if ! curl --fail-with-body 0.0.0.0:8080/plugins/nvim-lspconfig; then
+if ! curl --fail-with-body 0.0.0.0:8080/plugins; then
     echo "API is not running, starting..."
     # Build & run container
     cd ../nvim-plugin-api/

@@ -19,7 +19,7 @@
       <header
         class="w-full flex items-center px-4 py-2 bg-white ark:bg-background-900 text-gray-600"
       >
-        <a class="flex items-center" href="#">
+        <a class="flex items-center" href="/">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -37,30 +37,25 @@
           </svg>
           <span class="sr-only">Home</span>
         </a>
-        <a class="flex items-center" href="#">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6 mr-8"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-            />
-          </svg>
-
-          <span class="sr-only">Nvim Plugins</span>
-        </a>
         <nav class="flex gap-4">
-          <a class="text-sm font-medium hover:underline" href="#">
+          <a
+            class="text-sm font-medium hover:underline duration-300"
+            href="/getting-started"
+          >
             Get Started
           </a>
-          <a class="text-sm font-medium hover:underline" href="#"> Popular </a>
-          <a class="text-sm font-medium hover:underline" href="#"> Recent </a>
+          <a
+            class="text-sm font-medium hover:underline duration-300"
+            href="/plugins?sort=stars&desc=True"
+          >
+            Popular
+          </a>
+          <a
+            class="text-sm font-medium hover:underline transition-all duration-300"
+            href="/plugins?sort=last_updated&desc=True"
+          >
+            Recent
+          </a>
         </nav>
       </header>
       <main
@@ -74,11 +69,12 @@
             Track the most popular IDE plugins and boost your development
             workflow.
           </p>
-          <button
+          <a
             class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors bg-background-900 text-white hover:bg-primary-300 px-4 py-2"
+            href="/getting-started"
           >
             Get Started!
-          </button>
+          </a>
         </section>
         <div class="flex flex-col items-center">
           <div
@@ -156,9 +152,9 @@
         class="w-full h-16 flex items-center justify-center px-4 py-2 bg-white"
       >
         <nav class="flex gap-4">
-          <a class="text-sm font-medium hover:underline" href="#"> About </a>
-          <a class="text-sm font-medium hover:underline" href="#"> Contact </a>
-          <a class="text-sm font-medium hover:underline" href="#"> Legal </a>
+          <a class="text-sm font-medium hover:underline" href="/about">
+            About
+          </a>
         </nav>
       </footer>
     </section>

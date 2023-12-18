@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nvim Plugins</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='css/main.css')}}"
+    />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+  </head>
+
+  <body>
+    <section class="w-full min-h-screen flex flex-col">
+      <header
+        class="w-full flex items-center px-4 py-2 bg-white ark:bg-background-900 text-gray-600"
+      >
+        <a class="flex items-center" href="/">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-6 w-6 mr-8"
+          >
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span class="sr-only">Home</span>
+        </a>
+        <nav class="flex gap-4">
+          <a
+            class="text-sm font-medium hover:underline duration-300"
+            href="/getting-started"
+          >
+            Get Started
+          </a>
+          <a
+            class="text-sm font-medium hover:underline duration-300"
+            href="/plugins?sort=stars&desc=True"
+          >
+            Popular
+          </a>
+          <a
+            class="text-sm font-medium hover:underline transition-all duration-300"
+            href="/plugins?sort=last_updated&desc=True"
+          >
+            Recent
+          </a>
+        </nav>
+      </header>
+      <main
+        class="flex-1 w-full px-4 py-8 md:px-8 md:py-16 bg-white text-white"
+      >
+        <section class="items-center justify-center flex">
+          <div class="text-left space-y-6 max-w-5xl">
+            <h3 class="text-2xl mb-4 font-bold text-text-900">About</h3>
+            <h5 class="text-xl mb-4 font-bold text-text-900">What is this?</h5>
+            <p class="text-text-900">
+              This website was created both as a personal development project
+              and as a contribution to the NeoVim community. <br />
+              Our aim is to showcase and track the rapidly evolving ecosystem of
+              NeoVim plugins. Given the vibrant and expansive nature of the
+              community, capturing every innovation is a quite challeing
+              endeavor. We still strive to bring some unique insight into the
+              plugin landscape.
+            </p>
+            <h5 class="text-xl mb-4 font-bold text-text-900">Who is this?</h5>
+
+            <img
+              src="../static/me.jpg"
+              alt="A picture of me looking majestic or something"
+              class="float-right w-44 h-44 rounded-full"
+            />
+            <div class="text-text-900">
+              The site is a solo project by me: Jakob Sachs. This is my first
+              notable online presence besides my
+              <a
+                class="text-primary-500 hover:underline"
+                href="https://www.github.com/JakobSachs"
+                >Github</a
+              >
+              where i sometimes publish my (largely unfinished) side-projects.
+              If you want to help keep the cloud bills at a managable point, you
+              can also tip my coffe jar over at
+              <a
+                class="text-primary-500 hover:underline"
+                href="https://ko-fi.com/jakobsachs"
+              >
+                my ko-fi ☕️</a
+              >.
+              <br />
+              <p class="mt-4 mb-2 font-semibold underline">
+                Some things about me :
+              </p>
+
+              <ul class="mr-4 max-w-2xl space-y-1 mx-2 list-disc list-inside">
+                <li>
+                  I am a 24 year old student from Hamburg Germany, currently
+                  finishing my masters degree in computer science.
+                </li>
+                <li>
+                  I have been using NeoVim for about 2 years now and have been
+                  loving it ever since. My current config can be seen
+                  <a
+                    class="text-primary-500 hover:underline"
+                    href="https://github.com/JakobSachs/nvim"
+                    >here</a
+                  >
+                </li>
+                <li>
+                  Main interests/fields of study are Low-Level/High-Performance
+                  programming, Mathemathics and Machine Learning.
+                </li>
+
+                <li>
+                  This site is my first major web project and i am still
+                  learning a lot about web development.
+                </li>
+              </ul>
+            </div>
+
+            <h3 class="text-2xl mt-4 mb-4 font-bold text-text-900">FAQ</h3>
+            <h5 class="text-xl mb-4 font-bold text-text-900">
+              Why not just use vimawesome/neovimcraft/etc.?
+            </h5>
+            <p class="text-text-900">
+              As mentioned above this site is a personal project and i wanted to
+              learn more about web development & deployment. So by all means use
+              those sites if you prefer them. I will try to keep the data on
+              this site up to date but i cannot guarantee that it will always be
+              accurate.
+            </p>
+
+            <h5 class="text-xl mb-4 font-bold text-text-900">
+              How do i contact you with suggestions/questions ?
+            </h5>
+            <p class="text-text-900">
+              Since i dont necessarily wanna put my email just into the html of
+              the site, i setup a Form to contact me:
+              <a
+                href="https://forms.gle/BE5QAeQRGZKwaVxw9"
+                class="text-primary-500 hover:underline"
+                >Here</a
+              >
+              <br />
+              Any form of feedback/help is greatly appreciated! 🫶
+            </p>
+
+            <h5 class="text-xl mb-4 font-bold text-text-900">
+              Where do you get your data?
+            </h5>
+            <p class="text-text-900">
+              All the data is scrapped from Github via the offical API and
+              stored in a private DB. I plan to open-source the code for this in
+              the close future.
+            </p>
+            <h5 class="text-xl mb-4 font-bold text-text-900">
+              What did you use to build this?
+            </h5>
+            <p class="text-text-900">
+              From my few interactions with JavaScript, i took a inital
+              disliking to it, so i decided to write this project in the next
+              easiest language, Python. To be specific the frontend is build in
+              Flask + HTMX, while the backend is pure Flask.
+            </p>
+          </div>
+        </section>
+      </main>
+    </section>
+  </body>
+</html>

@@ -5,34 +5,39 @@
   loop.last
   %}
   hx-get="/list"
-  hx-swap="afterend"
+  hx-swap="afterend "
   hx-trigger="revealed"
   hx-vals="js:{page: incrementPage(), sorting: document.getElementById('sorting_selector').value.split(',')[0], desc: document.getElementById('sorting_selector').value.split(',')[1], search: document.getElementById('search_input').value}"
-  hx-indicator="#list_loading_indictator"
+  hx-indicator="#list_indictator"
   {%
   endif
   %}
-  class='p-4 w-full min-w-max h-32 min-h-full {{ "border-b-0" if loop.last else "" }}'
+  class='p-4 w-full min-w-max h-32 min-h-full {{ "border-b-0" if loop.last else "" }} '
 >
   <div
     class="w-full min-w-max h-full flex items-center justify-between space-x-4"
   >
     <div class="flex">
       <div
-        class="flex items-center justify-center w-16 h-16 text-[3em] rounded-full {{plug.bg_color}} text-text-100"
+        class="flex items-center justify-center w-16 h-16 text-[3em] rounded-full {{plug.bg_color}} text-text-50 hover:border-2 hover:border-accent-500 "
       >
-        <p>{{plug.name[0].upper()}}</p>
+        <a class="font-semibold" href="/plugin/{{plug.author}}/{{plug.name}}"
+          >{{plug.name[0].upper()}}</a
+        >
       </div>
     </div>
     <!-- middle part-->
     <div class="flex flex-col px-5 h-full w-full">
       <!-- Plugin name  and Link-->
       <div class="flex flex-col min-w-0">
-        <p class="text-lg font-semibold text-gray-900 truncate">
-          {{plug.name}}
-        </p>
         <a
-          class="text-sm font-light text-primary-500 truncate"
+          class="text-lg font-semibold text-gray-900 duration-300 transition-all ease-in-out hover:underline hover:text-primary-500"
+          href="/plugin/{{plug.author}}/{{plug.name}}"
+        >
+          {{plug.name}}
+        </a>
+        <a
+          class="text-sm font-light text-primary-500"
           href="https://github.com/{{plug.author}}/{{plug.name}}"
         >
           github.com/{{plug.author}}/{{plug.name}}

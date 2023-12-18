@@ -158,9 +158,45 @@ def plugins():
 
     return render_template("plugins.html", list_items=list_items, languages=languages)
 
+@app.route("/plugin/<author>/<name>")
+def plugin(author, name):
+    # check if author and name are valid
+    if not author or not name:
+        return Response(
+            "Bad Request: author and name are required parameters", status=400
+        )
+
+    # get plugin from API
+    try:
+        req = requests.get(
+            app.config["api_url"] + f"/plugin/{author}/{name}", timeout=5
+        )
+        
+        # check if request was successful
+        if req.status_code != 200:
+            return Response(
+            f"Bad Request: {author}/{name} is not a valid plugin", status=400
+            )
+
+        plugin = req.json()
+    except requests.exceptions.Timeout:
+        app.logger.error(
+            "Timeout when calling API: %s",
+            app.config["api_url"] + f"/plugin/{author}/{name}",
+        )
+        plugin = {}
+    # humanize the data
+    plugin = humanize_plugin(plugin)
+    return render_template("plugin_detail.html", plugin=plugin)
 
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
+@app.route("/getting-started")
+def getting_started():
+    return render_template("getting-started.html")
 
 if __name__ == "__main__":
 

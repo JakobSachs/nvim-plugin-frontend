@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nvim Plugins</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='css/main.css')}}"
+    />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+  </head>
+
+  <body>
+    <section class="w-full min-h-screen flex flex-col">
+      <header
+        class="w-full flex items-center px-4 py-2 bg-white ark:bg-background-900 text-gray-600"
+      >
+        <a class="flex items-center" href="/">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-6 w-6 mr-8"
+          >
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span class="sr-only">Home</span>
+        </a>
+        <nav class="flex gap-4">
+          <a
+            class="text-sm font-medium hover:underline duration-300"
+            href="/getting-started"
+          >
+            Get Started
+          </a>
+          <a
+            class="text-sm font-medium hover:underline duration-300"
+            href="/plugins?sort=stars&desc=True"
+          >
+            Popular
+          </a>
+          <a
+            class="text-sm font-medium hover:underline transition-all duration-300"
+            href="/plugins?sort=last_updated&desc=True"
+          >
+            Recent
+          </a>
+        </nav>
+      </header>
+      <main class="flex-1 w-full px-4 py-8 md:px-8 md:py-16 bg-white">
+        <section class="items-center justify-center flex">
+          <div class="w-full max-w-5xl">
+            <!--Plugin Name -->
+            <h3 class="text-3xl my-1 font-bold">
+              {{ plugin.author }}/{{plugin.name }}
+            </h3>
+            <h5 class="text-lg font-normal">{{ plugin.description}}</h5>
+            <hr class="mb-4" />
+            <!--Plugin Description -->
+            <div class="max-h-80 h-full">{{ plugin.readme }}</div>
+          </div>
+        </section>
+      </main>
+    </section>
+  </body>
+</html>
