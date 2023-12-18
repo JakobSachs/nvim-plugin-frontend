@@ -1,13 +1,22 @@
 import os
 import requests
 import random
+import emoji
 from datetime import datetime
-from flask import Flask, render_template
+import time
+from flask import Flask, Response, render_template,url_for, request
 
 app = Flask(__name__)
 app.config["api_url"] = os.environ.get("API_URL", "http://0.0.0.0:8080")
 
+@app.template_filter('emojify')
+def emoji_filter(s):
+    return emoji.emojize(s,language="alias")
+
+
 def humanize_plugin(plugin):
+    # find emojis in 
+
     # humanize stars
     stars = int(plugin["stars"])
     if stars > 1000:
@@ -32,8 +41,9 @@ def humanize_plugin(plugin):
         diff = "{}m".format(diff.seconds // 60)
     else:
         diff = "{}s".format(diff.seconds)
-
+    
     plugin["last_updated"] = "{} ago".format(diff)
+    
     return plugin
 
 @app.route("/")
@@ -75,18 +85,36 @@ def index():
         "index.html", pop_plugins=pop_plugins, latest_plugins=latest_plugins
     )
 
+def render_languages():
+    # get languages (for filtering)
+    try:
+        languages =  requests.get(
+                app.config["api_url"] + "/languages", timeout=5
+                        ).json()
+    except requests.exceptions.Timeout:
+        app.logger.error(
+            "Timeout when calling API: %s",
+            app.config["api_url"] + "/languages",
+        )
+        languages = []
+    app.logger.info(languages)
+    return render_template("filter_languages.html", languages=languages)
 
-@app.route("/popular")
-def popular():
+@app.route("/filter/languages")
+def languages():
+    return render_languages()
+
+def render_list_items(sort, order,page, search="") -> str:
+    # get plugins from API
     try:
         req = requests.get(
-            app.config["api_url"] + "/plugins?sort=stars&desc=True", timeout=5
+                app.config["api_url"] + f"/plugins?sort={sort}&desc={order}&page={page}{'&search='+search if len(search) else ''}",timeout=5
         )
         plugins = req.json()
     except requests.exceptions.Timeout:
         app.logger.error(
             "Timeout when calling API: %s",
-            app.config["api_url"] + "/plugins?sort=stars&desc=True",
+            app.config["api_url"] + f"/plugins?sort={sort}&desc={order}&page={page}",
         )
         plugins = []
 
@@ -96,8 +124,46 @@ def popular():
 
     plugins = [humanize_plugin(p) for p in plugins]
 
-    return render_template("popular.html", plugins=plugins)
+    return render_template("list_elements.html", plugins=plugins)
+
+
+@app.route("/list")
+def list_route():
+    # read sort and order from query string
+    sort = request.args.get("sort", "stars")
+    order = request.args.get("desc", "True")
+    page = request.args.get("page", "1")
+    search = request.args.get("search", "")
+
+    return render_list_items(sort, order,page, search=search)
+
+
+@app.route("/plugins")
+def plugins():
+    """
+    The general list view for plugins
+    """
+    sorting_options = ["name","stars","last_updated"]
+    sort = request.args.get("sort", "stars")
+    if not sort  in sorting_options:
+        return Response(f"Bad Request: {sort} is not a valid sorting value. only [{sorting_options}] are valid ☝️.")
+    
+    order = request.args.get("desc", "True")
+    if not order in ["True","False"]:
+        return Response(f"Bad Request: {order} is not a valid order value. only [True,False] are valid ☝️.")
+
+    # get and render listview
+    list_items = render_list_items(sort,order,1)
+    languages = render_languages()
+
+    return render_template("plugins.html", list_items=list_items, languages=languages)
+
+
+
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+
+    app.add_url_rule('/favicon.ico',
+                 redirect_to=url_for('static', filename='favicon.ico'))
+    app.run(debug=True,threaded=True)

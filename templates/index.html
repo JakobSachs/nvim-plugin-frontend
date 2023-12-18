@@ -8,12 +8,16 @@
       rel="stylesheet"
       href="{{url_for('static',filename='css/main.css')}}"
     />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
   </head>
 
   <body>
     <section class="w-full min-h-screen flex flex-col">
       <header
-        class="w-full flex items-center px-4 py-2 bg-white dark:bg-background-900 text-gray-600 dark:text-gray-300"
+        class="w-full flex items-center px-4 py-2 bg-white ark:bg-background-900 text-gray-600"
       >
         <a class="flex items-center" href="#">
           <svg
@@ -60,15 +64,13 @@
         </nav>
       </header>
       <main
-        class="flex-1 w-full px-4 py-8 md:px-8 md:py-16 bg-white dark:bg-background-950 text-white dark:text-gray-300"
+        class="flex-1 w-full px-4 py-8 md:px-8 md:py-16 bg-white text-white"
       >
         <section class="text-center space-y-6">
-          <h1
-            class="text-2xl md:text-3xl font-bold text-text-900 dark:text-white"
-          >
+          <h1 class="text-2xl md:text-3xl font-bold text-text-900">
             Welcome to Nvim Plugins!
           </h1>
-          <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300">
+          <p class="text-lg md:text-xl text-gray-600">
             Track the most popular IDE plugins and boost your development
             workflow.
           </p>
@@ -84,8 +86,8 @@
           >
             <section class="mt-12 w-full">
               <a
-                class="text-3xl hover:underline transition-all decoration-1 font-bold mb-4 hover:text-primary-300 text-text-900 dark:text-white"
-                href="/popular"
+                class="text-3xl hover:underline transition-all decoration-1 font-bold mb-4 hover:text-primary-300 text-text-900"
+                href="/plugins?sort=stars&desc=True"
               >
                 Popular Plugins:
               </a>
@@ -93,14 +95,12 @@
                 <!-- POPULAR PLUGINS -->
                 {% for plug in pop_plugins %}
                 <div
-                  class="rounded-lg hover:border-primary-300 border transition-all dark:border-gray-600 bg-white dark:bg-background-950 p-4 text-text-900 shadow-sm flex flex-col h-full"
+                  class="rounded-lg hover:border-primary-300 border transition-all bg-white p-4 text-text-900 shadow-sm flex flex-col h-full"
                 >
-                  <a class="text-xl font-semibold dark:text-white" href="#">
+                  <a class="text-xl font-semibold" href="#">
                     {{plug.author}} / {{plug.name}}
                   </a>
-                  <p
-                    class="text-sm text-gray-600 dark:text-gray-300 overflow-hidden grow"
-                  >
+                  <p class="text-sm text-gray-600 overflow-hidden grow">
                     {{plug.description}}
                   </p>
                   <div class="flex justify-end items-center">
@@ -118,7 +118,7 @@
             </section>
             <section class="mt-12 w-full">
               <a
-                class="text-3xl hover:underline transition-all decoration-1 font-bold mb-4 hover:text-primary-300 text-text-900 dark:text-white"
+                class="text-3xl hover:underline transition-all decoration-1 font-bold mb-4 hover:text-primary-300 text-text-900"
                 href="/recent"
               >
                 Recently Updated Plugins:
@@ -128,14 +128,12 @@
                 {% for plug in latest_plugins %}
 
                 <div
-                  class="rounded-lg hover:border-primary-300 border transition-all dark:border-gray-600 bg-white dark:bg-background-950 p-4 text-text-900 shadow-sm flex flex-col h-full"
+                  class="rounded-lg hover:border-primary-300 border transition-all bg-white p-4 text-text-900 shadow-sm flex flex-col h-full"
                 >
-                  <a class="text-xl font-semibold dark:text-white" href="#">
+                  <a class="text-xl font-semibold" href="#">
                     {{plug.author}} / {{plug.name}}
                   </a>
-                  <p
-                    class="text-sm text-gray-600 dark:text-gray-300 overflow-hidden grow"
-                  >
+                  <p class="text-sm text-gray-600 overflow-hidden grow">
                     {{plug.description}}
                   </p>
                   <div class="flex justify-end items-center">
@@ -155,7 +153,7 @@
         </div>
       </main>
       <footer
-        class="w-full h-16 flex items-center justify-center px-4 py-2 bg-white dark:bg-background-950"
+        class="w-full h-16 flex items-center justify-center px-4 py-2 bg-white"
       >
         <nav class="flex gap-4">
           <a class="text-sm font-medium hover:underline" href="#"> About </a>

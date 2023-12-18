@@ -1,0 +1,12 @@
+{% for lang in languages %}
+<div class="flex items-center justify-between flex-row m-1">
+  <input
+    type="checkbox"
+    name="filter_language_{{lang._id}}"
+    value="{{lang._id}}"
+    class="mr-2 text-sm text-primary-500 focus:ring-primary-400"
+  />
+  <label class="ml-4 text-sm text-text-700" for="Lua">{{lang._id}}</label>
+  <p class="text-sm text-text-700">({{lang.count}})</p>
+</div>
+{% endfor %}
