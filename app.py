@@ -4,18 +4,20 @@ import random
 import emoji
 from datetime import datetime
 import time
-from flask import Flask, Response, render_template,url_for, request
+import pycmarkgfm
+from flask import Flask, Response, render_template, url_for, request
 
 app = Flask(__name__)
 app.config["api_url"] = os.environ.get("API_URL", "http://0.0.0.0:8080")
 
-@app.template_filter('emojify')
+
+@app.template_filter("emojify")
 def emoji_filter(s):
-    return emoji.emojize(s,language="alias")
+    return emoji.emojize(s, language="alias")
 
 
 def humanize_plugin(plugin):
-    # find emojis in 
+    # find emojis in
 
     # humanize stars
     stars = int(plugin["stars"])
@@ -24,10 +26,10 @@ def humanize_plugin(plugin):
     else:
         plugin["stars"] = "{:,}".format(plugin["stars"])
 
-    # humanize last updated by calculating the difference 
+    # humanize last updated by calculating the difference
     # between last_updated and current date
     last_updated = plugin["last_updated"]["$date"]
-    last_updated = last_updated.replace("Z", "+00:00") # add timezone to be UTC
+    last_updated = last_updated.replace("Z", "+00:00")  # add timezone to be UTC
     dt = datetime.fromisoformat(last_updated)
     now = datetime.now(tz=dt.tzinfo)
     diff = now - dt
@@ -41,10 +43,11 @@ def humanize_plugin(plugin):
         diff = "{}m".format(diff.seconds // 60)
     else:
         diff = "{}s".format(diff.seconds)
-    
+
     plugin["last_updated"] = "{} ago".format(diff)
-    
+
     return plugin
+
 
 @app.route("/")
 @app.route("/index")
@@ -85,30 +88,14 @@ def index():
         "index.html", pop_plugins=pop_plugins, latest_plugins=latest_plugins
     )
 
-def render_languages():
-    # get languages (for filtering)
-    try:
-        languages =  requests.get(
-                app.config["api_url"] + "/languages", timeout=5
-                        ).json()
-    except requests.exceptions.Timeout:
-        app.logger.error(
-            "Timeout when calling API: %s",
-            app.config["api_url"] + "/languages",
-        )
-        languages = []
-    app.logger.info(languages)
-    return render_template("filter_languages.html", languages=languages)
 
-@app.route("/filter/languages")
-def languages():
-    return render_languages()
-
-def render_list_items(sort, order,page, search="") -> str:
+def render_list_items(sort, order, page, search="") -> str:
     # get plugins from API
     try:
         req = requests.get(
-                app.config["api_url"] + f"/plugins?sort={sort}&desc={order}&page={page}{'&search='+search if len(search) else ''}",timeout=5
+            app.config["api_url"]
+            + f"/plugins?sort={sort}&desc={order}&page={page}{'&search='+search if len(search) else ''}",
+            timeout=5,
         )
         plugins = req.json()
     except requests.exceptions.Timeout:
@@ -135,7 +122,7 @@ def list_route():
     page = request.args.get("page", "1")
     search = request.args.get("search", "")
 
-    return render_list_items(sort, order,page, search=search)
+    return render_list_items(sort, order, page, search=search)
 
 
 @app.route("/plugins")
@@ -143,20 +130,24 @@ def plugins():
     """
     The general list view for plugins
     """
-    sorting_options = ["name","stars","last_updated"]
+    sorting_options = ["name", "stars", "last_updated"]
     sort = request.args.get("sort", "stars")
-    if not sort  in sorting_options:
-        return Response(f"Bad Request: {sort} is not a valid sorting value. only [{sorting_options}] are valid ☝️.")
-    
+    if not sort in sorting_options:
+        return Response(
+            f"Bad Request: {sort} is not a valid sorting value. only [{sorting_options}] are valid ☝️."
+        )
+
     order = request.args.get("desc", "True")
-    if not order in ["True","False"]:
-        return Response(f"Bad Request: {order} is not a valid order value. only [True,False] are valid ☝️.")
+    if not order in ["True", "False"]:
+        return Response(
+            f"Bad Request: {order} is not a valid order value. only [True,False] are valid ☝️."
+        )
 
     # get and render listview
-    list_items = render_list_items(sort,order,1)
-    languages = render_languages()
+    list_items = render_list_items(sort, order, 1)
 
-    return render_template("plugins.html", list_items=list_items, languages=languages)
+    return render_template("plugins.html", list_items=list_items)
+
 
 @app.route("/plugin/<author>/<name>")
 def plugin(author, name):
@@ -171,11 +162,11 @@ def plugin(author, name):
         req = requests.get(
             app.config["api_url"] + f"/plugin/{author}/{name}", timeout=5
         )
-        
+
         # check if request was successful
         if req.status_code != 200:
             return Response(
-            f"Bad Request: {author}/{name} is not a valid plugin", status=400
+                f"Bad Request: {author}/{name} is not a valid plugin", status=400
             )
 
         plugin = req.json()
@@ -187,19 +178,48 @@ def plugin(author, name):
         plugin = {}
     # humanize the data
     plugin = humanize_plugin(plugin)
-    return render_template("plugin_detail.html", plugin=plugin)
+    readme = pycmarkgfm.gfm_to_html(plugin["readme"])
+
+    # get chart data
+    req = requests.get(app.config["api_url"] + f"/star_history/{author}/{name}")
+    chart_json = {}
+    if req.status_code == 200:
+        try:
+            if req.json() is not None:
+                chart_json = req.json()
+        except:
+            app.logger.error("Error parsing chart data")
+
+
+    # humanize time stamps to be more readable
+    time_stamps = [d["timestamp"]["$date"] for d in chart_json]
+    time_stamps = [
+        datetime.fromisoformat(t.replace("Z", "+00:00")).strftime("%d %b %Y")
+        for t in time_stamps
+    ]
+
+    print(chart_json)
+    chart_data = {
+        "labels": time_stamps,
+        "values": [d["stars"] for d in chart_json],
+    }
+    return render_template(
+        "plugin_detail.html", plugin=plugin, readme=readme, chart_data=chart_data
+    )
 
 
 @app.route("/about")
 def about():
     return render_template("about.html")
 
+
 @app.route("/getting-started")
 def getting_started():
     return render_template("getting-started.html")
 
-if __name__ == "__main__":
 
-    app.add_url_rule('/favicon.ico',
-                 redirect_to=url_for('static', filename='favicon.ico'))
-    app.run(debug=True,threaded=True)
+if __name__ == "__main__":
+    app.add_url_rule(
+        "/favicon.ico", redirect_to=url_for("static", filename="favicon.ico")
+    )
+    app.run(debug=True, threaded=True)

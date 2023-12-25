@@ -61,17 +61,104 @@
       <main class="flex-1 w-full px-4 py-8 md:px-8 md:py-16 bg-white">
         <section class="items-center justify-center flex">
           <div class="w-full max-w-5xl">
-            <!--Plugin Name -->
-            <h3 class="text-3xl my-1 font-bold">
-              {{ plugin.author }}/{{plugin.name }}
-            </h3>
-            <h5 class="text-lg font-normal">{{ plugin.description}}</h5>
-            <hr class="mb-4" />
+            <div class="w-full flex items-center">
+              <div class="flex-1">
+                <!--Plugin Name -->
+                <h3 class="text-3xl my-1 font-bold">
+                  {{ plugin.author }}/{{plugin.name }}
+                </h3>
+                <h5 class="text-lg font-normal">{{ plugin.description}}</h5>
+              </div>
+              <div class="">
+                <!--Github link/icon-->
+                <a
+                  href="{{ plugin.url }}"
+                  class="flex items-center text-sm font-medium text-text-600 hover:text-text-800 duration-300 hover:border hover:border-accent-400"
+                >
+                  <img
+                    src="../../static/github-mark.png"
+                    class="h-10 w-10 hover:border duration-300 rounded-full"
+                  />
+                </a>
+              </div>
+            </div>
+            <hr class="mb-4 primary-100" />
+
+            <!--Plugin Details/Stats-->
+            <div class="max-h-full h-48 w-full flex">
+              <div
+                class="w-1/3 flex flex-col items-center justify-center border-r border-primary-100"
+              >
+                <div>
+                  <!--Stars -->
+                  <span class="text-xl font-bold text-text-900"
+                    >{{ plugin.stars }}</span
+                  >
+                  <span class="text-sm font-medium text-text-700">Stars</span>
+                </div>
+                <div>
+                  <!-- Commits -->
+                  <span class="text-xl font-bold"
+                    >{{ plugin.commit_count }} 1012</span
+                  >
+                  <span class="text-sm font-medium text-text-700">Commits</span>
+                </div>
+              </div>
+
+              <!--Chart -->
+              <div class="w-2/3 flex items-center justify-center">
+                <canvas id="chart" class="max-w-lg w-full h-full" />
+              </div>
+            </div>
+
+            <hr class="my-4 primary-100" />
             <!--Plugin Description -->
-            <div class="max-h-80 h-full">{{ plugin.readme }}</div>
+            <div class="m-6">
+              <div class="mb-2 font-medium">Readme:</div>
+              <div
+                class="p-6 bg-primary-100 h-96 overflow-auto shadow-sm readme-container rounded-md"
+              >
+                {{ readme|safe }}
+              </div>
+            </div>
           </div>
         </section>
       </main>
     </section>
   </body>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const ctx = document.getElementById('chart');
+    const data = JSON.parse('{{ chart_data | tojson | safe }}');
+    const labels = data.labels;
+    const values = data.values;
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            data: values,
+            borderWidth: 1,
+            borderColor: '#3395D7',
+            backgroundColor: '#88c7f2',
+          },
+        ],
+        options: {
+          scales: {
+            x: {
+              type: 'timeseries',
+            },
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+          }
+        },
+      },
+    });
+  </script>
 </html>

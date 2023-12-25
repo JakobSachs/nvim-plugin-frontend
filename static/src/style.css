@@ -2,6 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
+.readme-container h1 {
+  @apply text-xl text-text-900 underline mb-2;
+}
+
+.readme-container h2 {
+  @apply text-lg text-accent-500 mb-1;
+}
+
+.readme-container a {
+  @apply text-accent-300 underline;
+}
+
+.readme-container ul {
+  @apply list-disc list-inside text-sm;
+}
+
+.readme-container ol {
+  @apply list-decimal list-inside text-sm;
+}
+
+.readme-container li {
+  @apply text-text-900;
+}
+
+.readme-container p {
+  @apply text-text-900 text-sm;
+}
+
+.readme-container code {
+  @apply text-text-700 bg-accent-200 rounded-sm p-1 text-xs tracking-tight leading-none;
+}
+
+.readme-container img {
+  width: 50%;
+  height: auto;
+  @apply mx-auto p-4;
+}
+
 @layer base {
   :root {
     --text-50: #edf4f8;
