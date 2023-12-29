@@ -190,7 +190,6 @@ def plugin(author, name):
         except:
             app.logger.error("Error parsing chart data")
 
-
     # humanize time stamps to be more readable
     time_stamps = [d["timestamp"]["$date"] for d in chart_json]
     time_stamps = [
